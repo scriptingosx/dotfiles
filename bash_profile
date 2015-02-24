@@ -69,6 +69,6 @@ function ssh-copy-id() {
     cat ~/.ssh/id_rsa.pub | ssh "$1" "cat >> ~/.ssh/authorized_keys"
 }
 
-function recipe-open() { open "$(autopkg info $@ | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-edit() { bbedit "$(autopkg info $@ | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-reveal() { reveal "$(autopkg info $@ | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-open() { open "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-edit() { bbedit "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-reveal() { reveal "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
