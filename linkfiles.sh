@@ -37,3 +37,12 @@ fi
 if [[ -d "$PROJECTS/ThingsCLITool" ]]; then
 	ln -sFi "$PROJECTS/ThingsCLITool/things" "$BIN_FOLDER/things"
 fi
+
+if [[ -d "$PROJECTS/munki-pkg" ]]; then
+	ln -sFi "$PROJECTS/munki-pkg/munki-pkg" "$BIN_FOLDER/munki-pkg"
+fi
+
+if [[ -d "$PROJECTS/quickpkg" ]]; then
+	ln -sFi "$PROJECTS/quickpkg/quickpkg" "$BIN_FOLDER/quickpkg"
+fi
+
