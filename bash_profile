@@ -65,9 +65,9 @@ function bbman () {
   MANWIDTH=80 MANPAGER='col -bx' man $@ | bbedit --clean --view-top -t "man $@"
 }
 
-function ssh-copy-id() {
-    cat ~/.ssh/id_rsa.pub | ssh "$1" "cat >> ~/.ssh/authorized_keys"
-}
+#function ssh-copy-id() {
+#    cat ~/.ssh/id_rsa.pub | ssh "$1" "cat >> ~/.ssh/authorized_keys"
+#}
 
 function recipe-open() { open "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
 function recipe-edit() { bbedit "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
