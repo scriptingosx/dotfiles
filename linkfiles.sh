@@ -16,6 +16,16 @@ symlink () { # srcdir destdir [srcItem] item
     fi
 }
 
+linkproject() { # projectdir [srcItem] item
+    if [ $# -eq 1 ]; then
+        symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$1"
+    elif [ $# -eq 2 ]; then
+        symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2"
+    else
+        symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2" "$3"
+    fi
+}
+
 # function to create a dir with mode
 createDir() { # path mode
     if [ ! -d "$1" ]; then
@@ -38,12 +48,12 @@ createDir "${BIN_FOLDER}" 750
 echo "bin folder: $BIN_FOLDER"
 
 # look for certain git projects in the Projects folder and link the executable to ~/bin
-symlink "$PROJECTS/make-profile-pkg" "${BIN_FOLDER}" "make_profile_pkg.py" "make_profile_pkg"
-symlink "$PROJECTS/mcxToProfile" "${BIN_FOLDER}" "mcxToProfile.py" "mcxToProfile"
-symlink "$PROJECTS/recipeutil" "${BIN_FOLDER}" "recipeutil"
-symlink "$PROJECTS/RemindersCLITool" "${BIN_FOLDER}" "reminders"
-symlink "$PROJECTS/SoftwareCheck" "${BIN_FOLDER}" "softwarecheck"
-symlink "$PROJECTS/thingsCLITool" "${BIN_FOLDER}" "things"
-symlink "$PROJECTS/munki-pkg" "${BIN_FOLDER}" "munkipkg"
-symlink "$PROJECTS/quickpkg" "${BIN_FOLDER}" "quickpkg"
-symlink "$PROJECTS/ssh-installer" "${BIN_FOLDER}" "ssh-installer.sh" "ssh-installer"
+linkproject "make-profile-pkg" "make_profile_pkg.py" "make_profile_pkg"
+linkproject "mcxToProfile" "mcxToProfile.py" "mcxToProfile"
+linkproject "recipeutil"
+linkproject "RemindersCLITool" "reminders"
+linkproject "SoftwareCheck" "softwarecheck"
+linkproject "thingsCLITool" "things"
+linkproject "munki-pkg" "munkipkg"
+linkproject "quickpkg"
+linkproject "ssh-installer" "ssh-installer.sh" "ssh-installer"
