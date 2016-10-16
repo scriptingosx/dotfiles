@@ -72,3 +72,7 @@ function bbman () {
 function recipe-open() { open "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
 function recipe-edit() { bbedit "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
 function recipe-reveal() { reveal "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
+
+alias pacifist='open -a "Pacifist"'
+alias spackage='open -a "Suspicious Package"'
+
