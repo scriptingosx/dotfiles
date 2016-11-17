@@ -10,14 +10,14 @@ export HISTSIZE=10000
 export HISTFILESIZE=10000
 
 # avoid history duplicates
-export HISTCONTROL=ignoredups:erasedups
+#export HISTCONTROL=ignoredups:erasedups
 
 # share history
-shopt -s histappend
-export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+#shopt -s histappend
+#export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
 # add timestamp to history
-export HISTTIMEFORMAT="%F %T "
+#export HISTTIMEFORMAT="%F %T "
 
 # ls color
 export CLICOLOR=1
