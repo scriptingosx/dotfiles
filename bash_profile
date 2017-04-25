@@ -60,6 +60,7 @@ alias reveal="open -R"
 alias pacifist='open -a "Pacifist"'
 alias spackage='open -a "Suspicious Package"'
 
+alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{\"tile-type\"=\"spacer-tile\";}'; killall Dock;"
 
 # FUNCTIONS
 
