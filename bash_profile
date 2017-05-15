@@ -72,7 +72,7 @@ function quit() {
 
 # man page functions
 
-function preman() { man -t "$@" | open -f -a "Preview" ;}
+function preman() { man -t $@ | open -f -a "Preview" ;}
 function xmanpage() { open x-man-page://$@ ; }
 alias xman=xmanpage
 
@@ -113,4 +113,10 @@ alias cdf='pwdf; cd "$(pwdf)"'
 function recipe-open() { open "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
 function recipe-edit() { bbedit "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
 function recipe-reveal() { reveal "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
+
+# completions
+
+if [[ -r "$HOME/Projects/autopkg_complete/autopkg" ]]; then
+	source "$HOME/Projects/autopkg_complete/autopkg"
+fi
 
