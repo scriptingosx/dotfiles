@@ -1,16 +1,20 @@
 # echo bash_profile $(whoami)
 
-#path
+# PATH
 PATH=${PATH}:~/bin
 #PATH=${PATH}:~/Dropbox/bin
 export PATH
 
-#prompt
+# PROMPT
 
 # default macOS prompt is: \h:\W \u\$
 # only change for local access
-if [ -z "$SSH_CLIENT" ]; then
+if [[ -z "$SSH_CLIENT" ]]; then
+	# local connection, change prompt
 	export PS1="\[\e[1;30m\]\W\[\e[m\] \\$ "
+else
+	# ssh connection, print hostname and os version
+	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
 fi
 
 # make globbing case-insensitive
@@ -68,6 +72,10 @@ function quit() {
 	for app in $*; do
 		osascript -e 'quit app "'$app'"'
 	done
+}
+
+function vnc() {
+	open vnc://armin@"$1"
 }
 
 # man page functions
