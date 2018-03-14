@@ -1,12 +1,12 @@
- #!/bin/bash
+#!/bin/bash
 
-PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/libexec:/usr/local/bin export PATH
+export PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
 # function to create a symlink
 symlink () { # srcdir destdir [srcItem] item
     # even though the links point to the absolute path
-    if [ -e "$1/$3" ]; then
-        if [ ! -z "$4" ]; then
+    if [[ -e "$1/$3" ]]; then
+        if [[ ! -z "$4" ]]; then
             ln -sFi "$1/$3" "$2/$4"
         else
             ln -sFi "$1/$3" "$2/$3"
@@ -17,23 +17,14 @@ symlink () { # srcdir destdir [srcItem] item
 }
 
 linkproject() { # projectdir [srcItem] item
-    if [ $# -eq 1 ]; then
+    if [[ $# -eq 1 ]]; then
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$1"
-    elif [ $# -eq 2 ]; then
+    elif [[ $# -eq 2 ]]; then
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2"
     else
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2" "$3"
     fi
 }
-
-# function to create a dir with mode
-createDir() { # path mode
-    if [ ! -d "$1" ]; then
-        mkdir -p "$1"
-        chmod "$2" "$1"
-    fi
-}
-
 
 MY_PATH=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
@@ -44,7 +35,7 @@ PROJECTS=$(dirname "$MY_PATH")
 echo "Projects Folder: $PROJECTS"
 
 BIN_FOLDER="${HOME}/bin"
-createDir "${BIN_FOLDER}" 750
+mkdir -m 750 "${BIN_FOLDER}"
 echo "bin folder: $BIN_FOLDER"
 
 # look for certain git projects in the Projects folder and link the executable to ~/bin
