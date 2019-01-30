@@ -7,11 +7,20 @@ export PATH
 
 # PROMPT
 
+exitprompt() {
+    if [[ $? -eq 0 ]]; then
+        echo '' # nothing
+    else
+        echo "?$? " # red
+    fi
+}
+
+
 # default macOS prompt is: \h:\W \u\$
 # only change for local access
 if [[ -z "$SSH_CLIENT" ]]; then
 	# local connection, change prompt
-	export PS1="\[\e[1;30m\]\W\[\e[m\] \\$ "
+	export PS1='\[\e[0;31m\]$(exitprompt)\[\e[1;30m\]\W\[\e[m\] \\$ '
 else
 	# ssh connection, print hostname and os version
 	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
