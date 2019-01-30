@@ -15,7 +15,6 @@ exitprompt() {
     fi
 }
 
-
 # default macOS prompt is: \h:\W \u\$
 # only change for local access
 if [[ -z "$SSH_CLIENT" ]]; then
@@ -33,19 +32,8 @@ shopt -s nocaseglob
 export HISTSIZE=50000
 export HISTFILESIZE=50000
 
-# avoid history duplicates
-#export HISTCONTROL=ignoredups:erasedups
-
-# share history
-#shopt -s histappend
-#export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
-
-# add timestamp to history
-#export HISTTIMEFORMAT="%F %T "
-
 # color
 export CLICOLOR=1
-#export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # set EDITOR to bbedit
 if [[ -e "/usr/local/bin/bbedit" ]]; then
@@ -59,10 +47,6 @@ alias ll="ls -l"
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
-
-# Sets a mark in the terminal
-alias mark="osascript -e 'if app \"Terminal\" is frontmost then tell app \"System Events\" to keystroke \"u\" using command down'"
-alias bookmark="osascript -e 'if app \"Terminal\" is frontmost then tell app \"System Events\" to keystroke \"M\" using command down'"
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -92,6 +76,7 @@ function vnc() {
 function preman() { man -t $@ | open -f -a "Preview" ;}
 function xmanpage() { open x-man-page://$@ ; }
 alias xman=xmanpage
+alias man=xmanpage
 
 function bbman () {
   MANWIDTH=80 MANPAGER='col -bx' man $@ | bbedit --clean --view-top -t "man $@"
