@@ -27,7 +27,12 @@ function __build_prompt {
     local GREEN='\[\e[0;32m\]'
     local BOLD_GRAY='\[\e[1;30m\]'
     # longer list of codes here: https://unix.stackexchange.com/a/124408
-
+    
+    # let terminal know the current working Directory
+    #this is defined in /etc/bashrc_Apple_Terminal
+    update_terminal_cwd
+    
+    # start with an empty PS1
     PS1=""
 
     if [[ $EXIT -eq 0 ]]; then
