@@ -7,23 +7,33 @@ export PATH
 
 # PROMPT
 
-exitprompt() {
-    if [[ $? -eq 0 ]]; then
-        echo '' # nothing
-    else
-        echo "?$? " # red
-    fi
-}
-
 # default macOS prompt is: \h:\W \u\$
 # only change for local access
 if [[ -z "$SSH_CLIENT" ]]; then
 	# local connection, change prompt
-	export PS1='\[\e[0;31m\]$(exitprompt)\[\e[1;30m\]\W\[\e[m\] \\$ '
+	PROMPT_COMMAND=__prompt_command
+	# Func to gen PS1 after CMDs 
+	# from: https://stackoverflow.com/a/16715681
 else
 	# ssh connection, print hostname and os version
 	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
 fi
+
+
+__prompt_command() {
+    local EXIT="$?"             # This needs to be first
+    PS1=""
+
+    local ResetColor='\[\e[0m\]'
+    local Red='\[\e[0;31m\]'
+    local BGray='\[\e[1;30m\]'
+
+    if [ $EXIT != 0 ]; then
+        PS1+="${Red}?${EXIT}${ResetColor} "      # Add red if exit code non 0
+    fi
+
+    PS1+="${BGray}\W ${ResetColor}\$ "
+}
 
 # make globbing case-insensitive
 shopt -s nocaseglob
