@@ -5,35 +5,42 @@ PATH=${PATH}:~/bin
 #PATH=${PATH}:~/Dropbox/bin
 export PATH
 
-# PROMPT
+# print a message on SSH connection:
 
-# default macOS prompt is: \h:\W \u\$
-# only change for local access
-if [[ -z "$SSH_CLIENT" ]]; then
-	# local connection, change prompt
-	PROMPT_COMMAND=__prompt_command
-	# Func to gen PS1 after CMDs 
-	# from: https://stackoverflow.com/a/16715681
-else
+if [[ -n "$SSH_CLIENT" ]]; then
 	# ssh connection, print hostname and os version
 	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
 fi
 
+# PROMPT
 
-__prompt_command() {
-    local EXIT="$?"             # This needs to be first
+# default macOS prompt is: \h:\W \u\$
+
+# assemble the prompt string PS1
+# inspired from: https://stackoverflow.com/a/16715681
+function __build_prompt {
+    local EXIT="$?" # store current exit code
+    
+    # define some colors
+    local RESET='\[\e[0m\]'
+    local RED='\[\e[0;31m\]'
+    local GREEN='\[\e[0;32m\]'
+    local BOLD_GRAY='\[\e[1;30m\]'
+    # longer list of codes here: https://unix.stackexchange.com/a/124408
+
     PS1=""
 
-    local ResetColor='\[\e[0m\]'
-    local Red='\[\e[0;31m\]'
-    local BGray='\[\e[1;30m\]'
-
-    if [ $EXIT != 0 ]; then
-        PS1+="${Red}?${EXIT}${ResetColor} "      # Add red if exit code non 0
+    if [[ $EXIT -eq 0 ]]; then
+        PS1+="${GREEN}√${RESET} "      # Add green for success
+    else
+        PS1+="${RED}?️️️${EXIT}${RESET} " # Add red if exit code non 0
     fi
-
-    PS1+="${BGray}\W ${ResetColor}\$ "
+    # this is the default prompt for 
+    PS1+="${BOLD_GRAY}\W ${RESET}\$ "
 }
+
+# set the prompt command
+PROMPT_COMMAND=__build_prompt
 
 # make globbing case-insensitive
 shopt -s nocaseglob
@@ -72,30 +79,34 @@ alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{\"ti
 # FUNCTIONS
 
 function quit() {
-	for app in $*; do
-		osascript -e 'quit app "'$app'"'
+	for app in "$@"; do
+		osascript -e "quit app \"$app\""
 	done
 }
 
 function vnc() {
-	open vnc://armin@"$1"
+	open vnc://"$USER"@"$1"
 }
 
 # man page functions
 
-function preman() { man -t $@ | open -f -a "Preview" ;}
-function xmanpage() { open x-man-page://$@ ; }
+function preman() { man -t "$@" | open -f -a "Preview" ;}
+function xmanpage() { open x-man-page://"$*" ; }
 alias xman=xmanpage
 alias man=xmanpage
 
 function bbman () {
-  MANWIDTH=80 MANPAGER='col -bx' man $@ | bbedit --clean --view-top -t "man $@"
+  MANWIDTH=80 MANPAGER='col -bx' man "$*" | bbedit --clean --view-top -t "man $*"
 }
 
 # editor functions
 
 function  pllint () {
-	plutil -lint $@ | bbresults -p '(?P<file>.+?):(?P<msg>.*\sline\s(?P<line>\d+)\s.*)$'
+	plutil -lint "$*" | bbresults -p '(?P<file>.+?):(?P<msg>.*\sline\s(?P<line>\d+)\s.*)$'
+}
+
+function bbshellcheck {
+    shellcheck -f gcc "$@" | bbresults
 }
 
 # prints the path of the front Finder window. Desktop if no window open
@@ -115,16 +126,11 @@ EOS
 # changes directory to frontmost 
 alias cdf='pwdf; cd "$(pwdf)"'
 
-# Sierra added ssh-copy-id
-#function ssh-copy-id() {
-#    cat ~/.ssh/id_rsa.pub | ssh "$1" "cat >> ~/.ssh/authorized_keys"
-#}
-
 # autopkg recipe functions
 
-function recipe-open() { open "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-edit() { bbedit "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-reveal() { reveal "$(autopkg info '$1' | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-open() { open "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-edit() { bbedit "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
+function recipe-reveal() { reveal "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
 
 # completions
 
