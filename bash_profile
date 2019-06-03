@@ -6,7 +6,6 @@ PATH=${PATH}:~/bin
 export PATH
 
 # print a message on SSH connection:
-
 if [[ -n "$SSH_CLIENT" ]]; then
 	# ssh connection, print hostname and os version
 	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
@@ -28,10 +27,6 @@ function __build_prompt {
     local BOLD_GRAY='\[\e[1;30m\]'
     # longer list of codes here: https://unix.stackexchange.com/a/124408
     
-    # let terminal know the current working Directory
-    #this is defined in /etc/bashrc_Apple_Terminal
-    update_terminal_cwd
-    
     # start with an empty PS1
     PS1=""
 
@@ -45,7 +40,9 @@ function __build_prompt {
 }
 
 # set the prompt command
-PROMPT_COMMAND=__build_prompt
+# include previous values to maintain Apple Terminal support (window title path and sessions)
+# this is explained in /etc/bashrc_Apple_Terminal
+PROMPT_COMMAND="__build_prompt${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
 # make globbing case-insensitive
 shopt -s nocaseglob
