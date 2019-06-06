@@ -1,9 +1,8 @@
-# echo bash_profile $(whoami)
+# bash_profile
+# Armin Briegel
 
 # PATH
-PATH=${PATH}:~/bin
-#PATH=${PATH}:~/Dropbox/bin
-export PATH
+export PATH=${PATH}:~/bin
 
 # print a message on SSH connection:
 if [[ -n "$SSH_CLIENT" ]]; then
@@ -76,15 +75,7 @@ alias reveal="open -R"
 alias pacifist='open -a "Pacifist"'
 alias spackage='open -a "Suspicious Package"'
 
-alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{\"tile-type\"=\"spacer-tile\";}'; killall Dock;"
-
 # FUNCTIONS
-
-function quit() {
-	for app in "$@"; do
-		osascript -e "quit app \"$app\""
-	done
-}
 
 function vnc() {
 	open vnc://"$USER"@"$1"
@@ -92,17 +83,11 @@ function vnc() {
 
 # man page functions
 
-function preman() { man -t "$@" | open -f -a "Preview" ;}
 function xmanpage() { open x-man-page://"$*" ; }
 alias xman=xmanpage
 alias man=xmanpage
 
-function bbman () {
-  MANWIDTH=80 MANPAGER='col -bx' man "$*" | bbedit --clean --view-top -t "man $*"
-}
-
 # editor functions
-
 function  pllint () {
 	plutil -lint "$*" | bbresults -p '(?P<file>.+?):(?P<msg>.*\sline\s(?P<line>\d+)\s.*)$'
 }
@@ -110,33 +95,3 @@ function  pllint () {
 function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
-
-# prints the path of the front Finder window. Desktop if no window open
-function pwdf () {
-	osascript <<EOS
-		tell application "Finder"
-			if (count of Finder windows) is 0 then
-				set dir to (desktop as alias)
-			else
-				set dir to ((target of Finder window 1) as alias)
-			end if
-			return POSIX path of dir
-		end tell
-EOS
-}
-
-# changes directory to frontmost 
-alias cdf='pwdf; cd "$(pwdf)"'
-
-# autopkg recipe functions
-
-function recipe-open() { open "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-edit() { bbedit "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
-function recipe-reveal() { reveal "$(autopkg info \"$1\" | grep 'Recipe file path' | cut -c 22-)"; }
-
-# completions
-
-if [[ -r "$HOME/Projects/autopkg_complete/autopkg" ]]; then
-	source "$HOME/Projects/autopkg_complete/autopkg"
-fi
-
