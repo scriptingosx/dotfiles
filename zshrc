@@ -66,27 +66,27 @@ autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # HISTORY
    
-   # history file
-   HISTFILE="~/.zsh_history"
-   SAVEHIST=10000
-   HISTSIZE=10000
-   # include more information (timestamp)
-   setopt EXTENDED_HISTORY
-   # multiple shells append
-   setopt APPEND_HISTORY
-   #ignore dupes when searching
-   setopt HIST_FIND_NO_DUPS
-   # expire dupes first
-   setopt HIST_EXPIRE_DUPS_FIRST 
-   # makes history substitution commands a bit nicer. I don't fully understand
-   setopt HIST_VERIFY
-   # shares history across multiple zsh sessions, in real time
-   setopt SHARE_HISTORY
-   # don't store dupes
-   setopt HIST_IGNORE_DUPS
-   # adds commands as they are typed, not at shell exit
-   setopt INC_APPEND_HISTORY
-   setopt HIST_REDUCE_BLANKS
+# history file
+HISTFILE=~/.zsh_history
+SAVEHIST=10000
+HISTSIZE=10000
+# include more information (timestamp)
+setopt EXTENDED_HISTORY
+# multiple shells append
+setopt APPEND_HISTORY
+#ignore dupes when searching
+setopt HIST_FIND_NO_DUPS
+# expire dupes first
+setopt HIST_EXPIRE_DUPS_FIRST 
+# makes history substitution commands a bit nicer. I don't fully understand
+setopt HIST_VERIFY
+# shares history across multiple zsh sessions, in real time
+setopt SHARE_HISTORY
+# don't store dupes
+setopt HIST_IGNORE_DUPS
+# adds commands as they are typed, not at shell exit
+setopt INC_APPEND_HISTORY
+setopt HIST_REDUCE_BLANKS
  
 
 # print a message on SSH connection:
@@ -97,7 +97,7 @@ fi
 
 
 # set EDITOR to bbedit
-if [[ -e "/usr/local/bin/bbedit" ]]; then
+if [[ -x "/usr/local/bin/bbedit" ]]; then
     export EDITOR="bbedit -w --resume"
 fi
 
