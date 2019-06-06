@@ -62,8 +62,8 @@ PS1='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
 # case insensitive path-completion
 
 autoload -U compinit && compinit
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-
+# from: https://stackoverflow.com/a/24237590
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # HISTORY
    
    # history file
