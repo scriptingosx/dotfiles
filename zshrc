@@ -63,10 +63,11 @@ setopt NUMERIC_GLOB_SORT
 autoload -U compinit && compinit
 # from: https://stackoverflow.com/a/24237590
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # HISTORY
    
 # history file
-HISTFILE=~/.zsh_history
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=10000
 HISTSIZE=10000
 # include more information (timestamp)
