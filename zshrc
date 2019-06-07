@@ -52,12 +52,11 @@ PS1='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
 
 
 # case insensitive globbing
-   # case insensitive globbing
-   setopt NO_CASE_GLOB
-   # enable extended globbing features
-   setopt EXTENDED_GLOB
-   # sort extensions with numbers numerically
-   setopt NUMERIC_GLOB_SORT
+setopt NO_CASE_GLOB
+# enable extended globbing features
+setopt EXTENDED_GLOB
+# sort extensions with numbers numerically
+setopt NUMERIC_GLOB_SORT
 
 # case insensitive path-completion
 
