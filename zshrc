@@ -2,8 +2,7 @@
 # Armin Briegel
 
 # PATH
-path+=~/bin
-export PATH
+export PATH=$PATH:~/bin
 
 # prevent duplicate entries in path
 declare -U path
@@ -48,7 +47,7 @@ chpwd_functions=(update_terminal_cwd)
 # %1~         :  current working dir, shortening home to `~`, show the last `1` element
 # %#          :  `#` if root, `%` otherwise
 # %B %b       :  start/stop bold
-PS1='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
+PROMPT='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
 
 
 # case insensitive globbing
@@ -87,7 +86,12 @@ setopt HIST_IGNORE_DUPS
 # adds commands as they are typed, not at shell exit
 setopt INC_APPEND_HISTORY
 setopt HIST_REDUCE_BLANKS
- 
+
+
+## Auto Correction
+
+setopt CORRECT
+setopt CORRECT_ALL
 
 # print a message on SSH connection:
 if [[ -n "$SSH_CLIENT" ]]; then
@@ -98,26 +102,22 @@ fi
 
 # set EDITOR to bbedit
 if [[ -x "/usr/local/bin/bbedit" ]]; then
-    export EDITOR="bbedit -w --resume"
+    export EDITOR="/usr/local/bin/bbedit -w --resume"
 fi
 
 
 # ALIASES
 
-alias ll="ls -l"
+alias -g ll="ls -l"
 
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
-alias badge="tput bel"
+alias -g badge="tput bel"
 
-alias ..="cd .."
-alias ...="cd ../.."
-alias cd..="cd .."
+alias -g reveal="open -R"
 
-alias reveal="open -R"
-
-alias pacifist='open -a "Pacifist"'
-alias spackage='open -a "Suspicious Package"'
+alias -g pacifist='open -a "Pacifist"'
+alias -g spackage='open -a "Suspicious Package"'
 
 
 # FUNCTIONS
