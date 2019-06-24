@@ -1,6 +1,9 @@
 # bash_profile
 # Armin Briegel
 
+# set a variable to know if this has run
+BASH_PROFILE_VERSION="2"
+
 # PATH
 export PATH=${PATH}:~/bin
 
@@ -73,7 +76,6 @@ alias cd..="cd .."
 alias reveal="open -R"
 
 alias pacifist='open -a "Pacifist"'
-alias spackage='open -a "Suspicious Package"'
 
 # FUNCTIONS
 
