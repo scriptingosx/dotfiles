@@ -1,0 +1,16 @@
+# prints the path of the front Finder window. Desktop if no window open
+
+# use an alias to change to the current finder window
+# alias cdf='pwdf; cd "$(pwdf)"'
+function pwdf () {
+	osascript << EndOfScript
+		tell application "Finder"
+			if (count of Finder windows) is 0 then
+				set dir to (desktop as alias)
+			else
+				set dir to ((target of Finder window 1) as alias)
+			end if
+			return POSIX path of dir
+		end tell
+EndOfScript
+}

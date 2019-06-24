@@ -1,11 +1,16 @@
 # zshrc
 # Armin Briegel
 
-# PATH
-export PATH=$PATH:~/bin
+# set a profile version
+ZSHRC_VERSION="1"
 
 # prevent duplicate entries in path
 declare -U path
+
+# PATH
+path+=~/bin
+
+# PROMPT
 
 # function to update terminal title bar current working dir
 # (borrowed from /etc/bashrc_Apple_Terminal)
@@ -38,30 +43,34 @@ update_terminal_cwd() {
 update_terminal_window_title() { printf "\e]0;$@\a" }
 
 # add a function to update window title cwd on dir change
-chpwd_functions=(update_terminal_cwd)
+chpwd_functions+=(update_terminal_cwd)
 
+# since the function will run on _changing_ the dir
+# it won't run automatically at shell start
+# so, run it once now, to update:
+update_terminal_cwd
 
-# PROMPT
+# Actual Prompt
 
 # %(?.√.?%?)  :  if return code `?` is 0, show `√`, else show `?%?`
 # %1~         :  current working dir, shortening home to `~`, show the last `1` element
 # %#          :  `#` if root, `%` otherwise
 # %B %b       :  start/stop bold
+# %F{...}     :  colors
 PROMPT='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
 
 
-# case insensitive globbing
-setopt NO_CASE_GLOB
+# SHELL OPTIONS
+
 # enable extended globbing features
 setopt EXTENDED_GLOB
+# case insensitive globbing
+setopt NO_CASE_GLOB
 # sort extensions with numbers numerically
 setopt NUMERIC_GLOB_SORT
 
-# case insensitive path-completion
-
-autoload -U compinit && compinit
-# from: https://stackoverflow.com/a/24237590
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# Enable Auto cd
+setopt AUTO_CD
 
 # HISTORY
    
@@ -69,40 +78,52 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=10000
 HISTSIZE=10000
-# include more information (timestamp)
+# store more information (timestamp)
 setopt EXTENDED_HISTORY
-# multiple shells append
-setopt APPEND_HISTORY
-#ignore dupes when searching
-setopt HIST_FIND_NO_DUPS
-# expire dupes first
-setopt HIST_EXPIRE_DUPS_FIRST 
-# makes history substitution commands a bit nicer. I don't fully understand
-setopt HIST_VERIFY
-# shares history across multiple zsh sessions, in real time
+
+# shares history across multiple zsh sessions
 setopt SHARE_HISTORY
-# don't store dupes
-setopt HIST_IGNORE_DUPS
+# append to history
+setopt APPEND_HISTORY
 # adds commands as they are typed, not at shell exit
 setopt INC_APPEND_HISTORY
+
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST 
+# do not store duplications
+setopt HIST_IGNORE_DUPS
+#ignore duplicates when searching
+setopt HIST_FIND_NO_DUPS
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST 
+# removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 
+# when using history substitution (!!, !$, etc.), present for confirmation/editing
+setopt HIST_VERIFY
 
 ## Auto Correction
-
 setopt CORRECT
 setopt CORRECT_ALL
+
+# KEY BINDINGS
+
+bindkey $'^[[A' up-line-or-search    # up arrow
+bindkey $'^[[B' down-line-or-search  # down arrow
+
+# COMPLETION
+
+# case insensitive path-completion
+autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}'
+
+# enable arrow key menu for completion
+#zstyle ':completion:*' menu select
 
 # print a message on SSH connection:
 if [[ -n "$SSH_CLIENT" ]]; then
 	# ssh connection, print hostname and os version
 	echo "Welcome to $(scutil --get ComputerName) ($(sw_vers -productVersion))"
-fi
-
-
-# set EDITOR to bbedit
-if [[ -x "/usr/local/bin/bbedit" ]]; then
-    export EDITOR="/usr/local/bin/bbedit -w --resume"
 fi
 
 
@@ -117,7 +138,6 @@ alias -g badge="tput bel"
 alias -g reveal="open -R"
 
 alias -g pacifist='open -a "Pacifist"'
-alias -g spackage='open -a "Suspicious Package"'
 
 
 # FUNCTIONS
@@ -133,11 +153,29 @@ alias xman=xmanpage
 alias man=xmanpage
 
 # editor functions
+
+# set EDITOR to bbedit
+if [[ -x "/usr/local/bin/bbedit" ]]; then
+    export EDITOR="/usr/local/bin/bbedit -w --resume"
+fi
+
+# show plutil -lint results in bbedit
 function  pllint () {
 	plutil -lint "$*" | bbresults -p '(?P<file>.+?):(?P<msg>.*\sline\s(?P<line>\d+)\s.*)$'
 }
 
+# show shellcheck results in bbedit
 function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
+
+# Finder Sync
+
+# shows a finder window with the PWD next to terminal
+FINDER_SYNC_PATH=~/Projects/FinderSync/finder_sync.applescript
+function finder_sync() {
+    FINDER_SYNC_WINDOW_ID=${FINDER_SYNC_WINDOW_ID:-0}
+    FINDER_SYNC_WINDOW_ID=$("$FINDER_SYNC_PATH" $FINDER_SYNC_WINDOW_ID $PWD )
+}
+#chpwd_functions+=(finder_sync)
 
