@@ -30,6 +30,7 @@ MY_PATH=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
 symlink "${MY_PATH}" "${HOME}" "inputrc" ".inputrc"
 symlink "${MY_PATH}" "${HOME}" "bash_profile" ".bash_profile"
+symlink "${MY_PATH}" "${HOME}" "bashrc" ".bashrc"
 symlink "${MY_PATH}" "${HOME}" "zshrc" ".zshrc"
 
 PROJECTS=$(dirname "$MY_PATH")
