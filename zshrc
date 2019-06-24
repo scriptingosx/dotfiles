@@ -142,13 +142,18 @@ alias -g pacifist='open -a "Pacifist"'
 
 # FUNCTIONS
 
-function vnc() {
-	open vnc://"$USER"@"$1"
-}
+# include my zshfunctions dir in fpath:
+fpath+=~/Projects/dotfiles/zshfunctions 
+
+# prints path to frontmost finder window
+autoload pwdf
+alias cdf='pwdf; cd "$(pwdf)"'
+
+# vnc opens screen sharing
+autoload vnc
 
 # man page functions
-
-function xmanpage() { open x-man-page://"$*" ; }
+autoload xmanpage
 alias xman=xmanpage
 alias man=xmanpage
 

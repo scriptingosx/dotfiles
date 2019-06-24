@@ -1,0 +1,3 @@
+function vnc() {
+	open vnc://"$USER"@"$1"
+}
