@@ -79,7 +79,7 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=10000
 HISTSIZE=10000
 # store more information (timestamp)
-setopt EXTENDED_HISTORY
+#setopt EXTENDED_HISTORY
 
 # shares history across multiple zsh sessions
 setopt SHARE_HISTORY
@@ -94,15 +94,13 @@ setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 #ignore duplicates when searching
 setopt HIST_FIND_NO_DUPS
-# expire duplicates first
-setopt HIST_EXPIRE_DUPS_FIRST 
 # removes blank lines from history
 setopt HIST_REDUCE_BLANKS
 
 # when using history substitution (!!, !$, etc.), present for confirmation/editing
 setopt HIST_VERIFY
 
-## Auto Correction
+## Correction
 setopt CORRECT
 setopt CORRECT_ALL
 
