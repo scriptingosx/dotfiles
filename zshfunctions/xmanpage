@@ -1,3 +1,11 @@
-function xmanpage() { 
-    open x-man-page://"$*" ;
-}
+# if there is a single argument, open its man page using the URL
+# this opens the 'yellow' single window man page in Terminal.app
+
+# if there are two arguments, interpret the first as the section
+# for unknown reasons the section has to come _first_ in the URL
+
+if [[ -z $2 ]]; then
+    open x-man-page://"$1"
+else
+    open x-man-page://"$2"/"$1"
+fi

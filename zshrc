@@ -85,8 +85,6 @@ HISTSIZE=10000
 setopt SHARE_HISTORY
 # append to history
 setopt APPEND_HISTORY
-# adds commands as they are typed, not at shell exit
-setopt INC_APPEND_HISTORY
 
 # expire duplicates first
 setopt HIST_EXPIRE_DUPS_FIRST 
@@ -127,15 +125,15 @@ fi
 
 # ALIASES
 
-alias -g ll="ls -l"
+alias ll="ls -l"
+
+alias reveal="open -R"
+
+alias pacifist='open -a "Pacifist"'
 
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
 alias -g badge="tput bel"
-
-alias -g reveal="open -R"
-
-alias -g pacifist='open -a "Pacifist"'
 
 
 # FUNCTIONS
@@ -145,7 +143,7 @@ fpath+=~/Projects/dotfiles/zshfunctions
 
 # prints path to frontmost finder window
 autoload pwdf
-alias cdf='pwdf; cd "$(pwdf)"'
+alias cdf='pwdf; cd $(pwdf -notilde )'
 
 # vnc opens screen sharing
 autoload vnc
