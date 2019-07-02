@@ -170,13 +170,3 @@ function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
 
-# Finder Sync
-
-# shows a finder window with the PWD next to terminal
-FINDER_SYNC_PATH=~/Projects/FinderSync/finder_sync.applescript
-function finder_sync() {
-    FINDER_SYNC_WINDOW_ID=${FINDER_SYNC_WINDOW_ID:-0}
-    FINDER_SYNC_WINDOW_ID=$("$FINDER_SYNC_PATH" $FINDER_SYNC_WINDOW_ID $PWD )
-}
-#chpwd_functions+=(finder_sync)
-
