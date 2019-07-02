@@ -142,8 +142,7 @@ alias -g badge="tput bel"
 fpath+=~/Projects/dotfiles/zshfunctions 
 
 # prints path to frontmost finder window
-autoload pwdf
-alias cdf='pwdf; cd $(pwdf -notilde )'
+autoload pwdf && pwdf
 
 # vnc opens screen sharing
 autoload vnc

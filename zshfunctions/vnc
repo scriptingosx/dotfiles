@@ -1,6 +1,7 @@
 # uses the arguments as hostnames for `open vnc://` (Screen Sharing)
 # uses the $USER username as default account name
-
-for x in $@; do 
-    open vnc://"$USER"@"$x"
-done
+function vnc() {
+	for x in $@; do 
+    	open vnc://"$USER"@"$x"
+	done
+}

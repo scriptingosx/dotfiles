@@ -2,20 +2,24 @@
 
 # use an alias to change to the current finder window
 # alias cdf='pwdf; cd "$(pwdf)"'
-finder_path=$( osascript << EndOfScript
-    tell application "Finder"
-        if (count of Finder windows) is 0 then
-            set dir to (desktop as alias)
-        else
-            set dir to ((target of Finder window 1) as alias)
-        end if
-        return POSIX path of dir
-    end tell
+function pwdf() {
+    finder_path=$( osascript <<- EndOfScript
+        tell application "Finder"
+            if (count of Finder windows) is 0 then
+                set dir to (desktop as alias)
+            else
+                set dir to ((target of Finder window 1) as alias)
+            end if
+            return POSIX path of dir
+        end tell
 EndOfScript
 )
-# this correctly inserts '~'
-if [[ $1 != "-notilde" ]]; then
-    print -rD $finder_path
-else
-    print $finder_path
-fi
+    if [[ $1 != "-notilde" ]]; then
+        # this correctly inserts '~'
+        print -rD $finder_path
+    else
+        print $finder_path
+    fi
+}
+
+alias cdf='pwdf; cd $(pwdf -notilde )'
