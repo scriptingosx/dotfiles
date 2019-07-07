@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
 export PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
 # function to create a symlink
 symlink () { # srcdir destdir [srcItem] item
     # even though the links point to the absolute path
-    if [[ -e "$1/$3" ]]; then
-        if [[ ! -z "$4" ]]; then
+    if [ -e "$1/$3" ]; then
+        if [ ! -z "$4" ]; then
             ln -sFi "$1/$3" "$2/$4"
         else
             ln -sFi "$1/$3" "$2/$3"
@@ -17,9 +17,9 @@ symlink () { # srcdir destdir [srcItem] item
 }
 
 linkproject() { # projectdir [srcItem] item
-    if [[ $# -eq 1 ]]; then
+    if [ $# -eq 1 ]; then
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$1"
-    elif [[ $# -eq 2 ]]; then
+    elif [ $# -eq 2 ]; then
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2"
     else
         symlink "${PROJECTS}/$1" "${BIN_FOLDER}" "$2" "$3"
@@ -45,7 +45,6 @@ linkproject "make-profile-pkg" "make_profile_pkg.py" "make_profile_pkg"
 linkproject "mcxToProfile" "mcxToProfile.py" "mcxToProfile"
 linkproject "recipeutil"
 linkproject "RemindersCLITool" "reminders"
-linkproject "SoftwareCheck" "softwarecheck"
 linkproject "thingsCLITool" "things"
 linkproject "munki-pkg" "munkipkg"
 linkproject "quickpkg"
