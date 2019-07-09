@@ -109,9 +109,36 @@ bindkey $'^[[B' down-line-or-search  # down arrow
 
 # COMPLETION
 
+# add my completion folder to fpath
+
+mac_completion_dir=~/Projects/mac-zsh-completions/completions/
+if [[ -d $mac_completion_dir ]]; then
+    fpath=( $mac_completion_dir $fpath )
+fi
+
 # case insensitive path-completion
-autoload -U compinit && compinit
-zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}'
+
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+# show descriptions when autocompleting
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' format 'Completing %d'
+
+# these have to do with partial completion
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' expand prefix suffix
+
+# list with colors
+zstyle ':completion:*' list-colors ''
+
+# load completion
+autoload -Uz compinit && compinit
+
+# load bashcompinit for some old bash completions
+autoload bashcompinit && bashcompinit
+
+# autopkg completion
+[[ -r ~/Projects/autopkg_complete/autopkg ]] && source ~/Projects/autopkg_complete/autopkg
 
 # enable arrow key menu for completion
 #zstyle ':completion:*' menu select
@@ -139,7 +166,10 @@ alias -g badge="tput bel"
 # FUNCTIONS
 
 # include my zshfunctions dir in fpath:
-fpath+=~/Projects/dotfiles/zshfunctions 
+my_zsh_functions=~/Projects/dotfiles/zshfunctions/
+if [[ -d $my_zsh_functions ]]; then
+    fpath=( ~/Projects/dotfiles/zshfunctions $fpath )
+fi
 
 # prints path to frontmost finder window
 autoload pwdf && pwdf
