@@ -10,45 +10,17 @@ declare -U path
 # PATH
 path+=~/bin
 
+# include my zshfunctions dir in fpath:
+my_zsh_functions=~/Projects/dotfiles/zshfunctions/
+if [[ -d $my_zsh_functions ]]; then
+    fpath=( ~/Projects/dotfiles/zshfunctions $fpath )
+fi
+
+
 # PROMPT
 
-# function to update terminal title bar current working dir
-# (borrowed from /etc/bashrc_Apple_Terminal)
-update_terminal_cwd() {
-	# Identify the directory using a "file:" scheme URL, including
-	# the host name to disambiguate local vs. remote paths.
-	
-	# Percent-encode the pathname.
-	local url_path=''
-	{
-	    # Use LC_CTYPE=C to process text byte-by-byte. Ensure that
-	    # LC_ALL isn't set, so it doesn't interfere.
-	    local i ch hexch LC_CTYPE=C LC_ALL=
-	    for (( i = 1; i <= ${#PWD}; ++i)); do
-            ch="$PWD[i]"
-            if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
-                url_path+="$ch"
-            else
-                printf -v hexch "%02X" "'$ch"
-                # printf treats values greater than 127 as
-                # negative and pads with "FF", so truncate.
-                url_path+="%${hexch: -2:2}"
-            fi
-	    done
-	}
-	printf '\e]7;%s\a' "file://$HOSTNAME$url_path"
-}
-
-# this updates just the window title
-update_terminal_window_title() { printf "\e]0;$@\a" }
-
-# add a function to update window title cwd on dir change
-chpwd_functions+=(update_terminal_cwd)
-
-# since the function will run on _changing_ the dir
-# it won't run automatically at shell start
-# so, run it once now, to update:
-update_terminal_cwd
+# this sets up the connection with the Apple Terminal Title Bar
+autoload -U update_terminal_pwd && update_terminal_pwd
 
 # Actual Prompt
 
@@ -124,12 +96,12 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' format 'Completing %d'
 
-# these have to do with partial completion
+# partial completion suggestions
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' expand prefix suffix
 
 # list with colors
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors ''x
 
 # load completion
 autoload -Uz compinit && compinit
@@ -164,12 +136,6 @@ alias -g badge="tput bel"
 
 
 # FUNCTIONS
-
-# include my zshfunctions dir in fpath:
-my_zsh_functions=~/Projects/dotfiles/zshfunctions/
-if [[ -d $my_zsh_functions ]]; then
-    fpath=( ~/Projects/dotfiles/zshfunctions $fpath )
-fi
 
 # prints path to frontmost finder window
 autoload pwdf && pwdf
