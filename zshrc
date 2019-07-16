@@ -25,12 +25,17 @@ autoload -U update_terminal_pwd && update_terminal_pwd
 # Actual Prompt
 
 # %(?.√.?%?)  :  if return code `?` is 0, show `√`, else show `?%?`
+# %?          :  exit code of previous command
 # %1~         :  current working dir, shortening home to `~`, show the last `1` element
 # %#          :  `#` if root, `%` otherwise
 # %B %b       :  start/stop bold
-# %F{...}     :  colors
-PROMPT='%(?.%F{green}√.%F{red}?%?)%F %B%1~%b %# '
+# %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+# %f          :  reset to default color
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
 
+
+# RIGHT PROMPT
+autoload -U git_right_prompt_setup && git_right_prompt_setup
 
 # SHELL OPTIONS
 
