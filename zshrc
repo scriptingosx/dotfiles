@@ -2,7 +2,7 @@
 # Armin Briegel
 
 # set a profile version
-ZSHRC_VERSION="1"
+ZSHRC_VERSION="2019-07-19"
 
 # prevent duplicate entries in path
 declare -U path
