@@ -139,6 +139,12 @@ alias pacifist='open -a "Pacifist"'
 # (useful when executing time-consuming commands)
 alias -g badge="tput bel"
 
+# Suffix Aliases
+
+alias -s txt=bbedit
+alias -s log="open -a Console"
+alias -s pkg=pacifist
+alias -s plist=pledit
 
 # FUNCTIONS
 
