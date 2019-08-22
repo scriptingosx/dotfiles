@@ -21,7 +21,7 @@ path+=~/bin
 
 # include my zshfunctions dir in fpath:
 if [[ -d $my_zsh_functions ]]; then
-    fpath=( ~/Projects/dotfiles/zshfunctions $fpath )
+    fpath=( $my_zsh_functions $fpath )
 fi
 
 
