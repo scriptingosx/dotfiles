@@ -22,7 +22,7 @@ update_terminal_cwd() {
             fi
 	    done
 	}
-	printf '\e]7;%s\a' "file://$HOSTNAME$url_path"
+	printf '\e]7;%s\a' "file://$HOST$url_path"
 }
 
 # this updates just the window title
