@@ -4,14 +4,22 @@
 # set a profile version
 ZSHRC_VERSION="2019-07-19"
 
+# path to my zsh functions folder:
+my_zsh_functions=~/Projects/dotfiles/zshfunctions/
+
+# path to mac completions dir
+mac_completion_dir=~/Projects/mac-zsh-completions/completions/
+
+
+
 # prevent duplicate entries in path
 declare -U path
 
 # PATH
 path+=~/bin
 
+
 # include my zshfunctions dir in fpath:
-my_zsh_functions=~/Projects/dotfiles/zshfunctions/
 if [[ -d $my_zsh_functions ]]; then
     fpath=( ~/Projects/dotfiles/zshfunctions $fpath )
 fi
@@ -88,7 +96,6 @@ bindkey $'^[[B' down-line-or-search  # down arrow
 
 # add my completion folder to fpath
 
-mac_completion_dir=~/Projects/mac-zsh-completions/completions/
 if [[ -d $mac_completion_dir ]]; then
     fpath=( $mac_completion_dir $fpath )
 fi
