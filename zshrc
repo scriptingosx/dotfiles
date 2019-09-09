@@ -39,11 +39,11 @@ autoload -U update_terminal_pwd && update_terminal_pwd
 # %B %b       :  start/stop bold
 # %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 # %f          :  reset to default color
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
+PROMPT='%(?.%F{green}.%F{red}?%? )%f%B%F{240}%1~%f%b %(!.#.%(?.%F{green}.%F{red})➜%f) '
 
 
 # RIGHT PROMPT
-autoload -U git_right_prompt_setup && git_right_prompt_setup
+autoload -U git_vcs_setup && git_vcs_setup
 
 # SHELL OPTIONS
 
