@@ -69,12 +69,12 @@ HISTSIZE=10000
 # shares history across multiple zsh sessions
 setopt SHARE_HISTORY
 # append to history
-setopt APPEND_HISTORY
+#setopt APPEND_HISTORY
 
 # expire duplicates first
 setopt HIST_EXPIRE_DUPS_FIRST 
-# do not store duplications
-setopt HIST_IGNORE_DUPS
+# do not store duplications, keep newest
+setopt HIST_IGNORE_ALL_DUPS
 #ignore duplicates when searching
 setopt HIST_FIND_NO_DUPS
 # removes blank lines from history
@@ -136,7 +136,7 @@ fi
 
 # ALIASES
 
-alias ll="ls -l"
+alias ll="ls -lG"
 
 alias reveal="open -R"
 
@@ -182,4 +182,15 @@ function  pllint () {
 function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
+
+
+## some plug-ins
+
+# zsh-autosuggestions
+# https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+[[ -f ~/Projects/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/Projects/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# zsh-syntax-highlighting (note, according to their docs, this must be loaded _LAST_
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+[[ -f ~/Projects/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/Projects/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
