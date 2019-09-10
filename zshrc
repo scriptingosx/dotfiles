@@ -27,8 +27,11 @@ fi
 
 # PROMPT
 
-# this sets up the connection with the Apple Terminal Title Bar
-autoload -U update_terminal_pwd && update_terminal_pwd
+# only for Mojave and earlier
+if [[ $(sw_vers -buildVersion) < "19" ]]; then 
+    # this sets up the connection with the Apple Terminal Title Bar
+    autoload -U update_terminal_pwd && update_terminal_pwd
+fi
 
 # Actual Prompt
 
@@ -39,6 +42,7 @@ autoload -U update_terminal_pwd && update_terminal_pwd
 # %B %b       :  start/stop bold
 # %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 # %f          :  reset to default color
+# %(!.        :  conditional depending on privileged user?
 PROMPT='%(?.%F{green}.%F{red}?%? )%f%B%F{240}%1~%f%b %(!.#.%(?.%F{green}.%F{red})➜%f) '
 
 
