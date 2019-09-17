@@ -4,11 +4,14 @@
 # set a profile version
 ZSHRC_VERSION="2019-07-19"
 
+# path to directory containing repositories
+repo_dir=~/Projects
+
 # path to my zsh functions folder:
-my_zsh_functions=~/Projects/dotfiles/zshfunctions/
+my_zsh_functions=$repo_dir/dotfiles/zshfunctions/
 
 # path to mac completions dir
-mac_completion_dir=~/Projects/mac-zsh-completions/completions/
+mac_completion_dir=$repo_dir/mac-zsh-completions/completions/
 
 
 
@@ -42,8 +45,8 @@ fi
 # %B %b       :  start/stop bold
 # %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 # %f          :  reset to default color
-# %(!.        :  conditional depending on privileged user?
-PROMPT='%(?.%F{green}.%F{red}?%? )%f%B%F{240}%1~%f%b %(!.#.%(?.%F{green}.%F{red})➜%f) '
+# %(!.        :  conditional depending on privileged user
+PROMPT='%(?..%F{red}?%? )%B%F{240}%1~%b%f %(!.#.%(?.%F{green}.%F{red})➜%f) '
 
 
 # RIGHT PROMPT
@@ -126,7 +129,7 @@ autoload -Uz compinit && compinit
 autoload bashcompinit && bashcompinit
 
 # autopkg completion
-[[ -r ~/Projects/autopkg_complete/autopkg ]] && source ~/Projects/autopkg_complete/autopkg
+[[ -r $repo_dir/autopkg_complete/autopkg ]] && source $repo_dir/autopkg_complete/autopkg
 
 # enable arrow key menu for completion
 #zstyle ':completion:*' menu select
@@ -192,9 +195,12 @@ function bbshellcheck {
 
 # zsh-autosuggestions
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-[[ -f ~/Projects/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/Projects/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f $repo_dir/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $repo_dir/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# zsh-syntax-highlighting (note, according to their docs, this must be loaded _LAST_
+# zsh-syntax-highlighting
+# (note, according to their docs, this must be loaded _LAST_)
 # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-[[ -f ~/Projects/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/Projects/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f $repo_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $repo_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# always return true
+true
