@@ -8,11 +8,20 @@
 autoload -Uz vcs_info
 
 # this updates just the window title
-update_terminal_window_title() { printf "\e]0;$@\a" }
+update_terminal_window_title() {
+    printf '\e]2;%s\a' "$@"
+}
 
+# in Terminal tabs can have a title separate from the Window
+update_terminal_tab_title() {
+    printf '\e]1;%s\a' "$@"
+}
+
+
+# this function will be called to set the info
 precmd_vcs_info() { 
   vcs_info
-  update_terminal_window_title $vcs_info_msg_0_
+  update_terminal_tab_title $vcs_info_msg_0_
 }
 
 setopt prompt_subst
@@ -21,6 +30,7 @@ setopt prompt_subst
 
 # enables checking for staged/unstaged
 zstyle ':vcs_info:*' check-for-changes true
+
 # set the format for $vcd_info_msg_0 string
 # %s: vcs service (in our case 'git')
 # %r: repository name
@@ -28,13 +38,12 @@ zstyle ':vcs_info:*' check-for-changes true
 # %u: 'U' if there are unstaged files
 # %c: 'S' if there are staged, but uncommitted files
 
-# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
-
 zstyle ':vcs_info:git:*' formats 'repo:%r branch:%b %u%c'
 
 # enable just git
 zstyle ':vcs_info:*' enable git
 
+# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
 
 autoload add-zsh-hook
 add-zsh-hook precmd precmd_vcs_info
