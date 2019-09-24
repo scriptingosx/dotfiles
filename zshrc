@@ -197,6 +197,8 @@ function bbshellcheck {
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
 [[ -f $repo_dir/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $repo_dir/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+ZSH_AUTOSUGGEST_STRATEGY=( completion history )
+
 # zsh-syntax-highlighting
 # (note, according to their docs, this must be loaded _LAST_)
 # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
