@@ -2,7 +2,7 @@
 # Armin Briegel
 
 # set a profile version
-ZSHRC_VERSION="2019-07-19"
+ZSHRC_VERSION="2019-11-04"
 
 # path to directory containing repositories
 repo_dir=~/Projects
@@ -49,7 +49,7 @@ fi
 PROMPT='%(?..%F{red}?%? )%B%F{240}%1~%b%f %(!.#.%(?.%F{green}.%F{red})➜%f) '
 
 
-# RIGHT PROMPT
+# Git status
 autoload -U git_vcs_setup && git_vcs_setup
 
 # SHELL OPTIONS
@@ -126,10 +126,10 @@ zstyle ':completion:*' list-colors ''x
 autoload -Uz compinit && compinit
 
 # load bashcompinit for some old bash completions
-autoload bashcompinit && bashcompinit
+#autoload bashcompinit && bashcompinit
 
 # autopkg completion
-[[ -r $repo_dir/autopkg_complete/autopkg ]] && source $repo_dir/autopkg_complete/autopkg
+#[[ -r $repo_dir/autopkg_complete/autopkg ]] && source $repo_dir/autopkg_complete/autopkg
 
 # enable arrow key menu for completion
 #zstyle ':completion:*' menu select
