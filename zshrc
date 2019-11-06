@@ -68,8 +68,8 @@ setopt AUTO_CD
    
 # history file
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-SAVEHIST=10000
-HISTSIZE=10000
+SAVEHIST=20000
+HISTSIZE=50000
 # store more information (timestamp)
 #setopt EXTENDED_HISTORY
 
