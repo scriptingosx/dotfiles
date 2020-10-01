@@ -25,20 +25,20 @@ precmd_vcs_info() {
 }
 
 setopt prompt_subst
-# RPROMPT='%F{240}$vcs_info_msg_0_%f'
+RPROMPT='%F{240}$vcs_info_msg_0_%f'
 # PROMPT='\$vcs_info_msg_0_%# '
 
 # enables checking for staged/unstaged
 zstyle ':vcs_info:*' check-for-changes true
 
-# set the format for $vcd_info_msg_0 string
+# set the format for $vcd_info_msg_0 strings
 # %s: vcs service (in our case 'git')
 # %r: repository name
 # %b: branch name
 # %u: 'U' if there are unstaged files
 # %c: 'S' if there are staged, but uncommitted files
 
-zstyle ':vcs_info:git:*' formats 'repo:%r branch:%b %u%c'
+zstyle ':vcs_info:git:*' formats '%b:%u%c'
 
 # enable just git
 zstyle ':vcs_info:*' enable git

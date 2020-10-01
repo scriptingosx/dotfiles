@@ -97,3 +97,11 @@ function  pllint () {
 function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
+
+## random colored background
+if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
+    if [[ -x ~/bin/randombackground ]]; then
+        WINDOW_DARK_MODE=$(~/bin/randombackground)
+    fi
+fi
+

@@ -2,7 +2,7 @@
 # Armin Briegel
 
 # set a profile version
-ZSHRC_VERSION="2019-11-04"
+ZSHRC_VERSION="2020-04-22"
 
 # path to directory containing repositories
 repo_dir=~/Projects
@@ -13,6 +13,13 @@ my_zsh_functions=$repo_dir/dotfiles/zshfunctions/
 # path to mac completions dir
 mac_completion_dir=$repo_dir/mac-zsh-completions/completions/
 
+## random colored background
+## I put this early, otherwise it might happen to late when multiple windows are opened
+if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
+    if [[ -x ~/bin/randombackground ]]; then
+        WINDOW_DARK_MODE=$(~/bin/randombackground)
+    fi
+fi
 
 
 # prevent duplicate entries in path
@@ -20,12 +27,6 @@ declare -U path
 
 # PATH
 path+=~/bin
-
-
-# include my zshfunctions dir in fpath:
-if [[ -d $my_zsh_functions ]]; then
-    fpath=( $my_zsh_functions $fpath )
-fi
 
 
 # PROMPT
@@ -46,11 +47,7 @@ fi
 # %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 # %f          :  reset to default color
 # %(!.        :  conditional depending on privileged user
-PROMPT='%(?..%F{red}?%? )%B%F{240}%1~%b%f %(!.#.%(?.%F{green}.%F{red})➜%f) '
-
-
-# Git status
-autoload -U git_vcs_setup && git_vcs_setup
+PROMPT='%(?..%F{red}?%? )%B%F{240}%2~%b%f %(?.%F{green}.%F{red})%(!.#.➜)%f '
 
 # SHELL OPTIONS
 
@@ -91,8 +88,14 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 
 ## Correction
+
+# Correct commands
 setopt CORRECT
+# Correct all arguments
 setopt CORRECT_ALL
+
+# correction prompt
+SPROMPT="Correct %F{red}%R%f to %F{green}%r%f [nyae]?"
 
 # KEY BINDINGS
 
@@ -102,10 +105,12 @@ bindkey $'^[[B' down-line-or-search  # down arrow
 # COMPLETION
 
 # add my completion folder to fpath
-
-if [[ -d $mac_completion_dir ]]; then
-    fpath=( $mac_completion_dir $fpath )
-fi
+# (don't do this for root shells to avoid security warning)
+if [[ $EUID -ne 0 ]]; then
+    if [[ -d $mac_completion_dir ]]; then
+        fpath=( $mac_completion_dir $fpath )
+    fi
+fi 
 
 # case insensitive path-completion
 
@@ -162,22 +167,38 @@ alias -s plist=pledit
 
 # FUNCTIONS
 
-# prints path to frontmost finder window
-autoload pwdf && pwdf
+# include my zshfunctions dir in fpath:
+# (don't do this for root shells to avoid security warning)
+if [[ $EUID -ne 0 ]]; then
+    if [[ -d $my_zsh_functions ]]; then
+        fpath=( $my_zsh_functions $fpath )
+    fi
+    # prints path to frontmost finder window
+    autoload pwdf && pwdf
 
-# vnc opens screen sharing
-autoload vnc
+    # vnc opens screen sharing
+    autoload vnc
 
-# man page functions
-autoload xmanpage
-alias xman=xmanpage
-alias man=xmanpage
+    # man page functions
+    autoload xmanpage
+    alias xman=xmanpage
+    alias man=xmanpage
+    
+    # Git status
+    autoload -U git_vcs_setup && git_vcs_setup
+fi
 
 # editor functions
 
 # set EDITOR to bbedit
 if [[ -x "/usr/local/bin/bbedit" ]]; then
     export EDITOR="/usr/local/bin/bbedit -w --resume"
+fi
+
+# bat configuration
+# https://github.com/sharkdp/bat
+if [[ -x /usr/local/bin/bat ]]; then
+    export BAT_THEME=ansi-light
 fi
 
 # show plutil -lint results in bbedit
@@ -189,7 +210,6 @@ function  pllint () {
 function bbshellcheck {
     shellcheck -f gcc "$@" | bbresults
 }
-
 
 ## some plug-ins
 
