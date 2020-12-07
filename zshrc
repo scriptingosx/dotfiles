@@ -2,16 +2,7 @@
 # Armin Briegel
 
 # set a profile version
-ZSHRC_VERSION="2020-04-22"
-
-# path to directory containing repositories
-repo_dir=~/Projects
-
-# path to my zsh functions folder:
-my_zsh_functions=$repo_dir/dotfiles/zshfunctions/
-
-# path to mac completions dir
-mac_completion_dir=$repo_dir/mac-zsh-completions/completions/
+ZSHRC_VERSION="2020-12-07"
 
 ## random colored background
 ## I put this early, otherwise it might happen to late when multiple windows are opened
@@ -22,10 +13,21 @@ if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
 fi
 
 
+# path to directory containing repositories
+repo_dir=~/Projects
+
+# path to my zsh functions folder:
+my_zsh_functions=$repo_dir/dotfiles/zshfunctions/
+
+# path to mac completions dir
+mac_completion_dir=$repo_dir/mac-zsh-completions/completions/
+
+
+# PATH
+
 # prevent duplicate entries in path
 declare -U path
 
-# PATH
 path+=~/bin
 
 
@@ -60,6 +62,7 @@ setopt NUMERIC_GLOB_SORT
 
 # Enable Auto cd
 setopt AUTO_CD
+
 
 # HISTORY
    
@@ -146,6 +149,11 @@ if [[ -n "$SSH_CLIENT" ]]; then
 fi
 
 
+# ENVIRONMENT VARIABLES
+
+export CLICOLOR=1
+
+
 # ALIASES
 
 alias ll="ls -lG"
@@ -160,10 +168,12 @@ alias -g badge="tput bel"
 
 # Suffix Aliases
 
-alias -s txt=bbedit
-alias -s log="open -a Console"
-alias -s pkg=pacifist
-alias -s plist=pledit
+# alias -s txt=bbedit
+# alias -s log="open -a Console"
+# alias -s pkg=pacifist
+# alias -s plist=pledit
+
+# note disabled suffix aliases because they are confusing with auto-suggestion 
 
 # FUNCTIONS
 
