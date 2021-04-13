@@ -8,7 +8,8 @@ ZSHRC_VERSION="2020-12-07"
 ## I put this early, otherwise it might happen to late when multiple windows are opened
 if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
     if [[ -x ~/bin/randombackground ]]; then
-        WINDOW_DARK_MODE=$(~/bin/randombackground)
+        # this takes a moment, background it
+        nohup ~/bin/randombackground &>/dev/null
     fi
 fi
 
@@ -68,27 +69,28 @@ setopt AUTO_CD
    
 # history file
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-SAVEHIST=20000
-HISTSIZE=50000
+HISTSIZE=20000    # lines remembered per session
+SAVEHIST=20000    # lines stored in history file
+
 # store more information (timestamp)
-#setopt EXTENDED_HISTORY
+setopt extended_history
 
 # shares history across multiple zsh sessions
-setopt SHARE_HISTORY
+setopt share_history
 # append to history
-#setopt APPEND_HISTORY
+setopt append_history
 
 # expire duplicates first
-setopt HIST_EXPIRE_DUPS_FIRST 
+setopt hist_expire_dups_first 
 # do not store duplications, keep newest
-setopt HIST_IGNORE_ALL_DUPS
+setopt hist_ignore_all_dups
 #ignore duplicates when searching
-setopt HIST_FIND_NO_DUPS
+setopt hist_find_no_dups
 # removes blank lines from history
-setopt HIST_REDUCE_BLANKS
+setopt hist_reduce_blanks
 
-# when using history substitution (!!, !$, etc.), present for confirmation/editing
-setopt HIST_VERIFY
+# when using history expansion (!!, !$, etc.), present for confirmation/editing
+setopt hist_verify
 
 ## Correction
 
