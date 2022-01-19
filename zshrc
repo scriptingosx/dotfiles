@@ -2,14 +2,17 @@
 # Armin Briegel
 
 # set a profile version
-ZSHRC_VERSION="2020-12-07"
+ZSHRC_VERSION="2020-10-14"
+
+
+## setup fig
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 
 ## random colored background
 ## I put this early, otherwise it might happen to late when multiple windows are opened
 if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
     if [[ -x ~/bin/randombackground ]]; then
-        # this takes a moment, background it
-        nohup ~/bin/randombackground &>/dev/null
+        ~/bin/randombackground
     fi
 fi
 
@@ -168,6 +171,12 @@ alias pacifist='open -a "Pacifist"'
 # (useful when executing time-consuming commands)
 alias -g badge="tput bel"
 
+# re-define and autoload run-help
+HELPDIR=/usr/share/zsh/5.8/help
+unalias run-help
+autoload run-help
+alias help=run-help
+
 # Suffix Aliases
 
 # alias -s txt=bbedit
@@ -238,3 +247,8 @@ ZSH_AUTOSUGGEST_STRATEGY=( completion history )
 
 # always return true
 true
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
