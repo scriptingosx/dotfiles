@@ -19,6 +19,7 @@ fi
 
 # path to directory containing repositories
 repo_dir=~/Projects
+PROJECTS_DIR=$repo_dir
 
 # path to my zsh functions folder:
 my_zsh_functions=$repo_dir/dotfiles/zshfunctions/

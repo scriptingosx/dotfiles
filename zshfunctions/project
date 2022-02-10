@@ -1,0 +1,39 @@
+# finds a directory in projects and opens in Terminal, bbedit and Finder
+function project() {
+    local project=${1:?"first argument should be the name of the project"}
+    
+    if [[ -z $PROJECTS_DIR ]]; then
+        echo "no PROJECTS_DIR variable set"
+        return 1
+    fi
+    
+    local projects_path=$PROJECTS_DIR
+    
+    # if the folder doesn't exist, do nothing
+    if [[ ! -d "$projects_path/$project" ]]; then
+        echo "could not find $project in $projects_path"
+        return 1
+    fi
+
+    echo "$projects_path/$project"
+
+    # cd to the folder
+    cd "$projects_path/$project"
+    
+    # is there an Xcode project?
+    if [[ -n $(find . -name "*.xcodeproj" -maxdepth 1) ]]; then
+        # open in Xcode
+        xed .
+        
+        return
+    fi
+    
+    # open folder in BBEdit
+    bbedit .
+
+    # open folder in Finder
+    open .
+    
+    # bring Terminal to front
+    open -a "Terminal"
+}
