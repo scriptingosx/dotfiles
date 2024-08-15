@@ -1,0 +1,3 @@
+# opens man page in Preview
+
+mandoc -T pdf "$(/usr/bin/man -w $@)" | open -fa Preview

@@ -1,0 +1,3 @@
+# closes all Terminal windows with the profile "Man Page"
+
+osascript -e 'tell application "Terminal" to close (every window where name of current settings of every tab contains "Man Page")'

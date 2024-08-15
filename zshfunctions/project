@@ -36,4 +36,8 @@ function project() {
     
     # bring Terminal to front
     open -a "Terminal"
+    
+    if [[ -d .git ]]; then
+        git status
+    fi
 }

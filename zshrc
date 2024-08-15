@@ -5,9 +5,6 @@
 ZSHRC_VERSION="2020-10-14"
 
 
-## setup fig
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-
 ## random colored background
 ## I put this early, otherwise it might happen to late when multiple windows are opened
 if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
@@ -20,6 +17,8 @@ fi
 # path to directory containing repositories
 repo_dir=~/Projects
 PROJECTS_DIR=$repo_dir
+
+autoload project
 
 # path to my zsh functions folder:
 my_zsh_functions=$repo_dir/dotfiles/zshfunctions/
@@ -54,7 +53,7 @@ fi
 # %F{...}     :  colors, see https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 # %f          :  reset to default color
 # %(!.        :  conditional depending on privileged user
-PROMPT='%(?..%F{red}?%? )%B%F{240}%2~%b%f %(?.%F{green}.%F{red})%(!.#.➜)%f '
+PROMPT='%(?..%F{red}?%? )%B%F{240}%1~%b%f %(?.%F{green}.%F{red})%(!.#.➜)%f '
 
 # SHELL OPTIONS
 
@@ -105,6 +104,9 @@ setopt CORRECT_ALL
 
 # correction prompt
 SPROMPT="Correct %F{red}%R%f to %F{green}%r%f [nyae]?"
+
+# exceptions
+alias swift="nocorrect swift"
 
 # KEY BINDINGS
 
@@ -202,6 +204,8 @@ if [[ $EUID -ne 0 ]]; then
     autoload vnc
 
     # man page functions
+    autoload preman
+    autoload closeman
     autoload xmanpage
     alias xman=xmanpage
     alias man=xmanpage
@@ -248,8 +252,3 @@ ZSH_AUTOSUGGEST_STRATEGY=( completion history )
 
 # always return true
 true
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
